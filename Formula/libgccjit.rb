@@ -47,7 +47,7 @@ class Libgccjit < Formula
     pkgversion = "Homebrew GCC #{pkg_version} #{build.used_options*" "}".strip
 
     args = %W[
-      --build=x86_64-apple-darwin#{osmajor}
+      --build=x86_64-linux-gnu
       --prefix=#{prefix}
       --libdir=#{lib}/gcc/#{version.major}
       --disable-nls
@@ -62,7 +62,7 @@ class Libgccjit < Formula
     ]
 
     # Xcode 10 dropped 32-bit support
-    args << "--disable-multilib" if DevelopmentTools.clang_build_version >= 1000
+    args << "--disable-multilib" if OS.linux? || DevelopmentTools.clang_build_version >= 1000
 
     # System headers may not be in /usr/include
     sdk = MacOS.sdk_path_if_needed
